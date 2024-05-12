@@ -1,5 +1,10 @@
 version: '2'
 services:
+    redis:
+        image: redis
+        restart: always
+        ports:
+            - "6378:6379"
     db: 
         image: mysql:5.7
         restart: always
@@ -25,8 +30,11 @@ services:
             - "3001:3000"
         depends_on:
             - db
+            - redis
         links:
             - db
+            - redis
         environment:
             SECRET_KEY_BASE: secret_key_base
             CHAT_SYSTEM_DATABASE_PASSWORD: password
+            REDIS_URL: redis://redis:6379/0
