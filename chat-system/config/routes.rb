@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   get "application/:app_id" => "application#show"
+  post "application" => "application#create"
+  
+  get "application/:app_id/chat/:chat_id" => "chat#show"
 end
