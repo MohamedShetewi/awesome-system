@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   
   get "application/:app_id/chat/:chat_id" => "chat#show"
   post "application/:app_id/chat" => "chat#create"
+
+  post "application/:app_id/chat/:chat_id/message" => "message#create"
+  get "application/:app_id/chat/:chat_id/message/:message_id" => "message#show"
 end

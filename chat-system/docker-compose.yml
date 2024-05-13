@@ -17,6 +17,7 @@ services:
             - "3307:3306"
     ruby-app: 
         build: .
+        restart: always
         command: >
             bash -c "
             ./bin/rails db:create && ./bin/rails db:migrate &&

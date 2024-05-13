@@ -21,6 +21,7 @@ class ChatController < ActionController::Base
                 
                 CreateChatWorker.perform_async(params[:app_id], chat_id)
                 UpdateChatsCountWorker.perform_async(params[:app_id], chat_id)
+                $redis.set("app:#{params[:app_id]}:chat:#{chat_id}:messages_count", 0)
 
                 puts "Added a task to create a chat with ID: #{chat_id} for application ID: #{params[:app_id]}"
                 render json: {"Application": params[:app_id], "Chat": chat_id}
