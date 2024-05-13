@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
             username = $redis.get(key)
             chats_count = $redis.get("app:#{appID}:chats_count")
         
-            if username.nil?
+            if username.nil? # If the application is not found in Redis, check the database
                 app = Application.find_by(appID: appID)
                 if app.nil?
                     render json: {"error": "Application not found"}, status: 404
