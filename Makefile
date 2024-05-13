@@ -1,5 +1,5 @@
 up:
-	docker compose up --build ruby-app
+	docker compose up --build ruby-app 
 
 down:
 	docker compose down

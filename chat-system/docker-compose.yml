@@ -16,9 +16,7 @@ services:
         ports:
             - "3307:3306"
     ruby-app: 
-        build: 
-            context: ./chat-system
-            dockerfile: Dockerfile
+        build: .
         command: >
             bash -c "
             ./bin/rails db:create && ./bin/rails db:migrate &&
@@ -38,3 +36,16 @@ services:
             SECRET_KEY_BASE: secret_key_base
             CHAT_SYSTEM_DATABASE_PASSWORD: password
             REDIS_URL: redis://redis:6379/0
+    sidekiq:
+        build: .
+        command: bundle exec sidekiq /
+                echo "Sidekiq is running"
+        # volumes:
+        # - .:/sidekiq
+        depends_on:
+        - db
+        - redis
+        - ruby-app
+        environment:
+            REDIS_URL: redis://redis:6379/0
+            SECRET_KEY_BASE: secret_key_base

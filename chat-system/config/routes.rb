@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # application routes
   get "application/:app_id" => "application#show"
   post "application" => "application#create"
   

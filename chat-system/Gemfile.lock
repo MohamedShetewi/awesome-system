@@ -180,14 +180,14 @@ GEM
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (3.0.11)
-    rack-session (2.0.0)
-      rack (>= 3.0.0)
+    rack (2.2.9)
+    rack-session (1.0.2)
+      rack (< 3)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (2.1.0)
-      rack (>= 3)
-      webrick (~> 1.8)
+    rackup (1.0.0)
+      rack (< 3)
+      webrick
     rails (7.1.3.2)
       actioncable (= 7.1.3.2)
       actionmailbox (= 7.1.3.2)
@@ -220,7 +220,9 @@ GEM
     rake (13.2.1)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
-    redis (4.8.1)
+    redis (4.5.1)
+    redis-client (0.22.1)
+      connection_pool
     regexp_parser (2.9.1)
     reline (0.5.6)
       io-console (~> 0.5)
@@ -231,6 +233,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sidekiq (6.5.12)
+      connection_pool (>= 2.2.5, < 3)
+      rack (~> 2.0)
+      redis (>= 4.5.0, < 5)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -283,8 +289,10 @@ DEPENDENCIES
   mysql2 (~> 0.5)
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.2)
-  redis (~> 4.2)
+  redis (~> 4.5.0)
+  redis-client
   selenium-webdriver
+  sidekiq (~> 6.5.10)
   sprockets-rails
   stimulus-rails
   turbo-rails
