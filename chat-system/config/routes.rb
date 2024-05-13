@@ -7,4 +7,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # application routes
+  get "application/:app_id" => "application#show"
+  post "application" => "application#create"
+  
+  get "application/:app_id/chat/:chat_id" => "chat#show"
+  post "application/:app_id/chat" => "chat#create"
+
+  post "application/:app_id/chat/:chat_id/message" => "message#create"
+  get "application/:app_id/chat/:chat_id/message/:message_id" => "message#show"
 end

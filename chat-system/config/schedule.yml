@@ -1,0 +1,3 @@
+event_processor:
+  cron: "*/1 * * * *"
+  class: "EventProcessorWorker"
