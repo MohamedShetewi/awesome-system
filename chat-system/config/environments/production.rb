@@ -1,5 +1,6 @@
 require "active_support/core_ext/integer/time"
 
+Rails.application.config.active_record.belongs_to_required_by_default = false
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
