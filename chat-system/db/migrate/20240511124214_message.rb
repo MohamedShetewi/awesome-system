@@ -5,6 +5,7 @@ class Message < ActiveRecord::Migration[7.1]
       t.string :chatID, null: false
       t.string :messageID, null: false
       t.text :message, null: false
+      t.string :elasticsearchID, null: false
 
 
       t.timestamps
