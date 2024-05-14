@@ -6,6 +6,13 @@ class CreateMessageWorker
     if new_message.save
       # Record was successfully saved
       puts "Record saved successfully!"
+	  $elasticsearchClient.index(index: 'messages', 
+	  body: { 
+		appID: app_id, 
+		chatID: chat_id,
+		messageID: message_id,
+		message: message,
+	})
     else
       # Failed to save the record
       puts "Failed to save record: #{new_message.errors.full_messages.join(', ')}"
