@@ -1,5 +1,17 @@
 version: '2'
 services:
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
+        environment:
+            discovery.type: single-node
+            cluster.name: elasticsearch
+            xpack.security.enabled: false
+            http.cors.enabled: true
+            http.cors.allow-origin: "*"
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+
     redis:
         image: redis
         restart: always
@@ -30,13 +42,16 @@ services:
         depends_on:
             - db
             - redis
+            - elasticsearch
         links:
             - db
             - redis
+            - elasticsearch
         environment:
             SECRET_KEY_BASE: secret_key_base
             CHAT_SYSTEM_DATABASE_PASSWORD: password
             REDIS_URL: redis://redis:6379/0
+            ELASTICSEARCH_URL: http://elasticsearch:9200
     sidekiq:
         build: .
         command: bundle exec sidekiq /
@@ -47,6 +62,13 @@ services:
         - db
         - redis
         - ruby-app
+        - elasticsearch
+        links:
+        - db
+        - redis
+        - ruby-app
+        - elasticsearch 
         environment:
             REDIS_URL: redis://redis:6379/0
             SECRET_KEY_BASE: secret_key_base
+            ELASTICSEARCH_URL: http://elasticsearch:9200
