@@ -25,5 +25,7 @@ Rails.application.routes.draw do
   get "application/:app_id/chat/:chat_id/search/:query" => "message#search"
   #update a message
   put "application/:app_id/chat/:chat_id/message/:message_id" => "message#update"
+  #get all messages in a chat
+  get "application/:app_id/chat/:chat_id/messages" => "message#show_all"
   ############################################################################
 end
