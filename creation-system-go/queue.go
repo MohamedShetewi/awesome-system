@@ -28,6 +28,7 @@ type jobParam struct {
 	EnqueuedAt float64 `json:"enqueued_at"`
 }
 
+// to make sure sideKiq is implementing JobQueue
 var _ JobQueue = (*sidekiq)(nil)
 
 type JobQueue interface {
