@@ -5,7 +5,7 @@ class MessageController < ActionController::Base
     # GET /application/:app_id/chat/:chat_id/message/:message_id
     def show
         app_id = params[:app_id]
-        chat_id = params[:chat_id]
+        chat_id = params[:chat_id].to_i
         message_id = params[:message_id]
 
         if app_id.nil? || app_id.empty?
@@ -32,7 +32,7 @@ class MessageController < ActionController::Base
     # POST /application/:app_id/chat/:chat_id/message
     def create
         app_id = params[:app_id]
-        chat_id = params[:chat_id]
+        chat_id = params[:chat_id].to_i
         message = params[:message]
 
         if app_id.nil? || app_id.empty?
@@ -64,7 +64,7 @@ class MessageController < ActionController::Base
     
     def search
         app_id = params[:app_id]
-        chat_id = params[:chat_id]
+        chat_id = params[:chat_id].to_i
         query = params[:query]
 
         if $redis.get("app:#{params[:app_id]}:chat:#{chat_id}:messages_count").nil?
@@ -90,8 +90,8 @@ class MessageController < ActionController::Base
     # PUT /application/:app_id/chat/:chat_id/message/:message_id
     def update
         app_id = params[:app_id]
-        chat_id = params[:chat_id]
-        message_id = params[:message_id]
+        chat_id = params[:chat_id].to_i
+        message_id = params[:message_id].to_i
         messageBody = params[:message]
         puts "Received a request to update a message with ID: #{message_id} for chat ID: #{chat_id} in application ID: #{app_id} with message: #{messageBody}"
         if app_id.nil? || app_id.empty?

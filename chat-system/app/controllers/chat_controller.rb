@@ -4,7 +4,7 @@ class ChatController < ActionController::Base
     def show
         chatID = params[:chat_id].to_i
         # Logic to fetch a specific chat
-        chat = Chat.find(params[:app_id], chatID)
+        chat = Chat.find_by(appID: params[:app_id], chatID: chatID)
         puts chat
         if chat.nil?
             render json: {"error": "Chat not found"}, status: 404
@@ -27,8 +27,8 @@ class ChatController < ActionController::Base
         end 
         chat_id = $redis.incr("app:#{params[:app_id]}:chats_count")
         
-        CreateChatWorker.perform_async(params[:app_id], chat_id)
-        UpdateChatsCountWorker.perform_async(params[:app_id], chat_id)
+        CreateChatWorker.perform_async(params[:app_id], chat_id.to_i)
+        UpdateChatsCountWorker.perform_async(params[:app_id], chat_id.to_i)
         $redis.set("app:#{params[:app_id]}:chat:#{chat_id}:messages_count", 0)
 
         puts "Added a task to create a chat with ID: #{chat_id} for application ID: #{params[:app_id]}"
