@@ -83,7 +83,8 @@ class MessageController < ActionController::Base
                 }
             }
         })
-        render json: result
+        searchResults = result['hits']['hits'].map { |hit| hit['_source'] }
+        render json: searchResults
     end
 
     # PUT /application/:app_id/chat/:chat_id/message/:message_id

@@ -60,6 +60,13 @@ func (s *Server) HandleChatCreation(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	if err := s.jobQueue.EnqueueUpdateChatsCountJob(appToken, chatID, createdAt); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	// create an entry for messages count
+	messagesCountKey := fmt.Sprintf(messagesCountKeyTemplate, appToken, chatID)
+	s.cache.Set(messagesCountKey, 0)
 
 	// return chatID
 	w.Header().Set("Content-Type", "application/json")
@@ -123,6 +130,11 @@ func (s *Server) HandleMessageCreation(w http.ResponseWriter, req *http.Request)
 	// create a messageID
 	// enqueue create message job
 	if err := s.jobQueue.EnqueueCreateMessageJob(appToken, chatID, messageID, createMessageRequest.Message, createdAt); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := s.jobQueue.EnqueueUpdateMessagesCountJob(appToken, chatID, messageID, createdAt); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

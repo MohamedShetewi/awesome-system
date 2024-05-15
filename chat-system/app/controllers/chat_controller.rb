@@ -2,8 +2,9 @@ class ChatController < ActionController::Base
     skip_before_action :verify_authenticity_token
    
     def show
+        chatID = params[:chat_id].to_i
         # Logic to fetch a specific chat
-        chat = Chat.find(params[:app_id], params[:chat_id])
+        chat = Chat.find(params[:app_id], chatID)
         puts chat
         if chat.nil?
             render json: {"error": "Chat not found"}, status: 404

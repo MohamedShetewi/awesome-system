@@ -11,6 +11,7 @@ var _ Cache = (*redis)(nil)
 type Cache interface {
 	Get(key string) (string, error)
 	Incr(key string) (int64, error)
+	Set(key string, value int64) error
 }
 
 type redis struct {
@@ -32,4 +33,9 @@ func (r *redis) Get(key string) (string, error) {
 func (r *redis) Incr(key string) (int64, error) {
 	ctx := context.Background()
 	return r.redisClient.Incr(ctx, key).Result()
+}
+
+func (r *redis) Set(key string, value int64) error {
+	ctx := context.Background()
+	return r.redisClient.Set(ctx, key, value, 0).Err()
 }
