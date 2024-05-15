@@ -15,6 +15,15 @@ Rails.application.routes.draw do
   get "application/:app_id/chat/:chat_id" => "chat#show"
   post "application/:app_id/chat" => "chat#create"
 
+  # message routes
+  ############################################################################
+  # create a message
   post "application/:app_id/chat/:chat_id/message" => "message#create"
+  # get a message
   get "application/:app_id/chat/:chat_id/message/:message_id" => "message#show"
+  #search in a chat
+  get "application/:app_id/chat/:chat_id/search/:query" => "message#search"
+  #update a message
+  put "application/:app_id/chat/:chat_id/message/:message_id" => "message#update"
+  ############################################################################
 end

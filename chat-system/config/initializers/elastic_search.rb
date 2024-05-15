@@ -8,4 +8,5 @@ begin
     puts "Elasticsearch is available!!!!!! horaaay"
 rescue
     puts "Elasticsearch is not available, bypassing the application"
+    exit 1
 end
