@@ -10,7 +10,7 @@ class MessageController < ActionController::Base
 
         if app_id.nil? || app_id.empty?
             render json: {"error": "Application ID is required"}, status: 400
-        elsif chat_id.nil? || chat_id.empty?
+        elsif chat_id.nil?
             render json: {"error": "Chat ID is required"}, status: 400
         elsif message_id.nil? || message_id.empty?
             render json: {"error": "Message ID is required"}, status: 400
@@ -37,7 +37,7 @@ class MessageController < ActionController::Base
 
         if app_id.nil? || app_id.empty?
             render json: {"error": "Application ID is required"}, status: 400
-        elsif chat_id.nil? || chat_id.empty?
+        elsif chat_id.nil?
             render json: {"error": "Chat ID is required"}, status: 400
         elsif message.nil? || message.empty?
             render json: {"error": "Message is required"}, status: 400
@@ -98,11 +98,11 @@ class MessageController < ActionController::Base
             render json: {"error": "Application ID is required"}, status: 400
             return
         end
-        if chat_id.nil? || chat_id.empty?
+        if chat_id.nil? 
             render json: {"error": "Chat ID is required"}, status: 400
             return
         end
-        if message_id.nil? || message_id.empty?
+        if message_id.nil?
             render json: {"error": "Message ID is required"}, status: 400
             return
         end
@@ -124,5 +124,25 @@ class MessageController < ActionController::Base
         puts "Added a task to update a message with ID: #{message_id} for chat ID: #{chat_id} in application ID: #{app_id}"
         return render json: {
             "status": "success",}
+    end
+
+    # GET /application/:app_id/chat/:chat_id/messages
+    def show_all
+        app_id = params[:app_id]
+        chat_id = params[:chat_id].to_i
+
+        if app_id.nil? || app_id.empty?
+            render json: {"error": "Application ID is required"}, status: 400
+        elsif chat_id.nil?
+            render json: {"error": "Chat ID is required"}, status: 400
+        else
+            if $redis.get("app:#{app_id}:chat:#{chat_id}:messages_count").nil?
+                render json: {"error": "Chat not found"}, status: 404
+            else
+                messages = Message.where(appID: app_id, chatID: chat_id)
+                result = messages.map { |obj| { id: obj['id'], appID: obj['appID'], chatID: obj['chatID'], message: obj['message'] } }
+                render json: result
+            end
+        end
     end
 end
