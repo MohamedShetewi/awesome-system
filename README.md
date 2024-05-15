@@ -3,6 +3,8 @@ This is a chat system that allows user to create applications, chats and message
 messages in a chat.
 
 ## System Components
+![system](https://github.com/MohamedShetewi/awesome-system/blob/master/assets/System-components.png)
+
 
 ### Ruby service
 This is our main application. It has APIs to create and get Applications, Chats and Messages. It is connected
@@ -120,7 +122,76 @@ POST /application/:application_id/chat/:chat_id/message
     "Message": "Hello world again for the not last time"
 }
 ```
-
-
+#### Sample Request
+Ruby Service
+```
+ curl --location 'localhost:3001/application/dec969c6/chat/5/message' \
+ --header 'Content-Type: application/json' \
+ --data '{"message":"Hello world again for the not last time"}'
+```
+Golang Service
+```
+ curl --location 'localhost:8000/application/dec969c6/chat/5/message' \
+ --header 'Content-Type: application/json' \
+ --data '{"message":"Alhamdulilah"}'
+```
+### Get Message
+#### Request
+```
+GET application/:app_id/chat/:chat_id/message/:message_id
+```
+#### Response
+```
+{
+    "Application": "dec969c6",
+    "Chat": 5,
+    "MessageID": "3",
+    "Message": "Guess what? Alhamdulilah"
+}
+```
+#### Sample Request
+```
+curl --location 'localhost:3001/application/dec969c6/chat/5/message/3'
+```
+### Update Message
+#### Request
+```
+  PUT application/:app_id/chat/:chat_id/message/:message_id
+```
+#### Response
+```
+{
+    "status": "success"
+}
+```
+#### Sample Request
+```
+ curl --location --request PUT 'localhost:3001/application/dec969c6/chat/5/message/3' \
+ --header 'Content-Type: application/json' \
+ --data '{"message": "Guess what? Alhamdulilah"}'
+```
+### Get All Messages in Chat
+#### Request
+```
+application/:app_id/chat/:chat_id/messages
+```
+#### Response
+```
+{
+    "status": "success"
+}
+```
+or
+```
+{
+    "error": "Message not found"
+}
+```
+### Sample Request
+```
+ curl --location --request PUT 'localhost:3001/application/dec969c6/chat/5/message/3' \
+ --header 'Content-Type: application/json' \
+ --data '{"message": "Guess what? Alhamdulilah"}'
+```
 ## Database Schema
 ## How to run it?
