@@ -1,6 +1,31 @@
 # awesome-system
+## System Overview
 This is a chat system that allows user to create applications, chats and messages. Also, it allows the user to search for
 messages in a chat.
+# Table of Contents
+
+1. [System Overview](#system-overview)
+2. [System Components](#system-components)
+   - [Ruby Service](#ruby-service)
+   - [Golang Service](#golang-service)
+   - [MySQL](#mysql)
+   - [Redis](#redis)
+   - [Elasticsearch](#elasticsearch)
+   - [Workers](#workers)
+3. [Database Schema](#database-schema)
+4. [How to Run It?](#how-to-run-it)
+5. [API Design](#api-design)
+   - [Create Application](#create-application)
+   - [Get Application](#get-application)
+   - [Create Chat](#create-chat)
+   - [Get Chat](#get-chat)
+   - [Create Message](#create-message)
+   - [Search for Message](#search-for-message)
+   - [Get Message](#get-message)
+   - [Update Message](#update-message)
+   - [Get All Messages in Chat](#get-all-messages-in-chat)
+
+
 
 ## System Components
 ![system](https://github.com/MohamedShetewi/awesome-system/blob/master/assets/System-components.png)
@@ -186,7 +211,7 @@ GET application/:app_id/chat/:chat_id/search/:query
 #### Sample Request
 ```
 curl --location 'localhost:3001/application/dec969c6/chat/5/search/Alhamdulilah'
-``
+```
 
 ### Get Message
 #### Request
