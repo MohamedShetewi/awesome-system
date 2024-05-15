@@ -6,6 +6,7 @@ import (
 	redisClient "github.com/redis/go-redis/v9"
 )
 
+// to make sure that redis is implementing Cache interface.
 var _ Cache = (*redis)(nil)
 
 type Cache interface {
