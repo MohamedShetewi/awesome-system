@@ -65,9 +65,10 @@ entries in `Elasticsearch` (for example, failing to insert in the db for some re
 
 ## How to run it?
 1. Clone it `git clone https://github.com/MohamedShetewi/awesome-system`
-2. Run `docker compose up`.
+2. Navigate to project dir by `cd awesome-system`.
+3. Run `docker compose up`.
    1. Note that `Elasticsearch` takes sometime to start. So the `ruby-app` will keep restarting until `Elasticsearch` is ready.
-3. `ruby-service` will be available on port `3001` and `go-service` will be on `8000`
+4. `ruby-service` will be available on port `3001` and `go-service` will be on `8000`
 
 
 ## API Design
