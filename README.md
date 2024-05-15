@@ -18,6 +18,23 @@ This is used by the Ruby Service and Golang Service for caching and queueing. No
 ### Elasticsearch
 This is used by the Ruby Service to store the messages that are created. It is used then for searching in messages.
 
+### Workers
+This system uses [Sidekiq](https://github.com/sidekiq/sidekiq) to proccess the jobs asyncronously. It uses `redis` as the underlying queue.
+#### CreateApplicationWorker
+This worker is responsible for inserting the new application in `MySQL` db. A job is enqueued to this worker when `Create Application API` is hit.
+#### CreateChatWorker
+This worker inserts a new chat passed in the queue to `MySQL` db. This worker serves the `Create Chat API`.
+#### CreateMessageWorker
+This worker does exactly what previous workers do. However, it also inserts a new message to `Elasticsearch`
+#### UpdateChatsCountWorker
+This updates the `chatsCount` column in the `Application` table. This runs async after `Create Chat API`.
+#### UpdateMessagesCountWorker
+This also updates the `messagesCount` column in the `Message` table. However, this is called after `Create Message API`
+#### UpdateMessageWorker
+This worker is responsible to update the messages in 2 places, first the `Elasticsearch`. It gets the `_id` of the doc from `MySQL` db and 
+then updates the `message` in `Elasticsearch`, and then updates the `MySQL` db entry. Note that failing in this job could create duplicate
+entries in `Elasticsearch` (for example, failing to insert in the db for some reason). This could be mitigated by a clean job that cleans the dangling records in `Elasticsearch`.
+
 ## Database Schema
 ![schema](https://github.com/MohamedShetewi/awesome-system/blob/master/assets/db-schema.png)
 
