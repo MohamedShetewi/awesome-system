@@ -18,6 +18,11 @@ This is used by the Ruby Service and Golang Service for caching and queueing.
 ### Elasticsearch
 This is used by the Ruby Service to store the messages that are created. It is used then for searching in messages.
 
+## Database Schema
+![schema](https://github.com/MohamedShetewi/awesome-system/blob/master/assets/db-schema.png)
+
+## How to run it?
+
 
 ## API Design
 ### Create Application
@@ -193,5 +198,3 @@ or
  --header 'Content-Type: application/json' \
  --data '{"message": "Guess what? Alhamdulilah"}'
 ```
-## Database Schema
-## How to run it?
