@@ -14,7 +14,7 @@ to the MySQL db, Redis (for caching and queueing) and Elasticsearch. All creatio
 ### MySQL
 This is the main database. It stores all the data that is used by the Ruby Service. 
 ### Redis
-This is used by the Ruby Service and Golang Service for caching and queueing.
+This is used by the Ruby Service and Golang Service for caching and queueing. Note that the cache is used for some of the apis not all of them.
 ### Elasticsearch
 This is used by the Ruby Service to store the messages that are created. It is used then for searching in messages.
 
@@ -22,6 +22,10 @@ This is used by the Ruby Service to store the messages that are created. It is u
 ![schema](https://github.com/MohamedShetewi/awesome-system/blob/master/assets/db-schema.png)
 
 ## How to run it?
+1. Clone it `git clone https://github.com/MohamedShetewi/awesome-system`
+2. Run `docker compose up`.
+   1. Note that `Elasticsearch` takes sometime to start. So the `ruby-app` will keep restarting until `Elasticsearch` is ready.
+3. `ruby-service` will be available on port `3001` and `go-service` will be on `8000`
 
 
 ## API Design
@@ -140,6 +144,33 @@ Golang Service
  --header 'Content-Type: application/json' \
  --data '{"message":"Alhamdulilah"}'
 ```
+### Search for message
+#### Request
+```
+GET application/:app_id/chat/:chat_id/search/:query
+```
+#### Response
+```
+[
+    {
+        "appID": "dec969c6",
+        "chatID": 5,
+        "messageID": 4,
+        "message": "Alhamdulilah"
+    },
+    {
+        "appID": "dec969c6",
+        "chatID": 5,
+        "messageID": 5,
+        "message": "Alhamdulilah"
+    }
+]
+```
+#### Sample Request
+```
+curl --location 'localhost:3001/application/dec969c6/chat/5/search/Alhamdulilah'
+``
+
 ### Get Message
 #### Request
 ```
